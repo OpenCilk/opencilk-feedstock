@@ -1,4 +1,4 @@
-{% set version = "2.0.1" %}
+{% set version = "17.0.3" %}
 {% set major_ver = version.split(".")[0] %}
 
 # as of LLVM 17, we expect an "rc" suffix for the release candidates
@@ -6,12 +6,12 @@
 {% set extra = "git" if version.split(".")[-1] == "dev0" else extra %}
 
 package:
-  name: opencilk-package
+  name: llvm-package
   version: {{ version }}
 
 source:
-  url: https://github.com/OpenCilk/opencilk-project/releases/archive/refs/tags/opencilk/v{{ version.replace(".rc", "-rc") }}.tar.gz
-  sha256: 0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5 
+  url: https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ version.replace(".rc", "-rc") }}/llvm-project-{{ version.replace(".rc", "rc") }}.src.tar.xz
+  sha256: be5a1e44d64f306bb44fce7d36e3b3993694e8e6122b2348608906283c176db8
   patches:
     # - patches/intel-D47188-svml-VF.patch    # Fixes vectorizer and extends SVML support
     # - patches/expect-fastmath-entrypoints-in-add-TLI-mappings.ll.patch # adjusts test added in 10.0.0 for intel-D47188-svml-VF.patch effects
