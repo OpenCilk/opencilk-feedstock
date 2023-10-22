@@ -1,5 +1,5 @@
 {% set version = "2.0.1" %}
-{% set major_ver = version.split(".")[0] %}
+{% set major_ver = "14" %}
 
 # as of LLVM 17, we expect an "rc" suffix for the release candidates
 {% set extra = "rc" if version.split(".")[-1]|int not in range(7) else "" %}
@@ -10,6 +10,8 @@ package:
   version: {{ version }}
 
 source:
+  # TODO: this URL is definitely wrong, I don't know the path that opencilk puts archives at. WHen that's fixed,
+  #  don't forget to update the hash too!
   url: https://github.com/OpenCilk/opencilk-project/releases/archive/refs/tags/opencilk/v{{ version.replace(".rc", "-rc") }}.tar.gz
   sha256: 0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5 
   patches:
