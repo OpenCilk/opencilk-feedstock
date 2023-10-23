@@ -1,5 +1,8 @@
-{% set version = "2.0.1" %}
+{% set version = "14.0.0" %}
+# Set the precise version conservatively. We don't really know what version of 
+# llvm this opencilk is based on other than 14.
 {% set major_ver = "14" %}
+{% set opencilk_version = "2.0.1" %}
 
 # as of LLVM 17, we expect an "rc" suffix for the release candidates
 {% set extra = "rc" if version.split(".")[-1]|int not in range(7) else "" %}
@@ -7,22 +10,22 @@
 
 package:
   name: opencilk-package
-  version: {{ version }}
+  version: {{ opencilk_version }}
 
 source:
   # TODO: this URL is definitely wrong, I don't know the path that opencilk puts archives at. WHen that's fixed,
   #  don't forget to update the hash too!
-  url: https://github.com/OpenCilk/opencilk-project/releases/archive/refs/tags/opencilk/v{{ version.replace(".rc", "-rc") }}.tar.gz
-  sha256: 0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5 
+  url: https://github.com/OpenCilk/opencilk-project/archive/refs/tags/opencilk/v{{ opencilk_version.replace(".rc", "-rc") }}.tar.gz
+  sha256: dbf9cd8071b87d6936723eb31c21792227bd53a14d4003740d982b91857e5df2
   patches:
     # - patches/intel-D47188-svml-VF.patch    # Fixes vectorizer and extends SVML support
     # - patches/expect-fastmath-entrypoints-in-add-TLI-mappings.ll.patch # adjusts test added in 10.0.0 for intel-D47188-svml-VF.patch effects
     # - patches/amd-roc-2.7.0.diff
-    - patches/0001-pass-through-QEMU_LD_PREFIX-SDKROOT.patch
-    - patches/0002-restore-macos-10.9-support.patch
+    # - patches/0001-pass-through-QEMU_LD_PREFIX-SDKROOT.patch
+    # - patches/0002-restore-macos-10.9-support.patch
     # backports patch for issues with LLJIT, see
     # https://github.com/llvm/llvm-project/commit/122ebe3b500190b1f408e2e6db753853e297ba28
-    - patches/0003-ORC-Use-EPC-bootstrap-symbols-to-communicate-eh-fram.patch
+    # - patches/0003-ORC-Use-EPC-bootstrap-symbols-to-communicate-eh-fram.patch
 
 build:
   number: 0
