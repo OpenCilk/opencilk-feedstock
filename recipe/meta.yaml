@@ -11,8 +11,6 @@ package:
   version: {{ opencilk_version }}
 
 source:
-  # TODO: this URL is definitely wrong, I don't know the path that opencilk puts archives at. WHen that's fixed,
-  #  don't forget to update the hash too!
   url: https://github.com/OpenCilk/opencilk-project/archive/refs/tags/opencilk/v{{ opencilk_version.replace(".rc", "-rc") }}.tar.gz
   sha256: dbf9cd8071b87d6936723eb31c21792227bd53a14d4003740d982b91857e5df2
   patches:
@@ -46,7 +44,7 @@ requirements:
 
 outputs:
   # Contains everything
-  - name: llvmdev
+  - name: opencilk
     script: install_llvm.sh   # [unix]
     script: install_llvm.bat  # [win]
     build:
@@ -133,7 +131,7 @@ outputs:
       run:                                                            # [not win]
         - {{ pin_subpackage("libllvm" + major_ver, exact=True) }}     # [not win]
       run_constrained:                                                # [not win]
-        - llvmdev   {{ version }}                                     # [not win]
+        - opencilk   {{ opencilk_version }}                                     # [not win]
     test:
       commands:
         - echo "Hello World!"
@@ -160,7 +158,7 @@ outputs:
       run:
         - {{ pin_subpackage("libllvm" + major_ver, exact=True) }}
       run_constrained:
-        - llvmdev   {{ version }}
+        - opencilk   {{ opencilk_version }}
     test:
       commands:
         - $PREFIX/bin/llc -version                               # [not win]
@@ -192,7 +190,7 @@ outputs:
         - zlib
         - zstd
       run_constrained:
-        - llvmdev {{ version }}
+        - opencilk {{ opencilk_version }}
     test:
       commands:
         - test -f $PREFIX/lib/libLLVM-C.{{ major_ver }}.dylib   # [osx]
@@ -242,4 +240,4 @@ extra:
     - timsnyder
     - xhochy
     - h-vetinari
-  feedstock-name: llvmdev
+  feedstock-name: opencilk
