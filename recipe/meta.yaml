@@ -44,6 +44,9 @@ requirements:
 
 outputs:
   # Contains everything
+  # TODO: we want to put the correct LLVM version on our outputs.
+  # This is kind of hard to do because it means they'd have to have
+  # versions decoupled from the package itself. 
   - name: opencilk
     script: install_llvm.sh   # [unix]
     script: install_llvm.bat  # [win]
