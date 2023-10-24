@@ -1,6 +1,8 @@
 #!/bin/bash
 set -ex
 
+# TODO: this versioning is really sad. set an env var instead,
+# and parse that environment variable.
 IFS='.' read -ra VER_ARR <<< "14.0.6"
 
 # temporary prefix to be able to install files more granularly
