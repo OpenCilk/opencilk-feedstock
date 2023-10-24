@@ -44,9 +44,6 @@ requirements:
 
 outputs:
   # Contains everything
-  # TODO: we want to put the correct LLVM version on our outputs.
-  # This is kind of hard to do because it means they'd have to have
-  # versions decoupled from the package itself. 
   - name: opencilk
     script: install_llvm.sh   # [unix]
     script: install_llvm.bat  # [win]
@@ -94,8 +91,11 @@ outputs:
   # Contains the shared libraries. To make different LLVM libraries co-installable
   # soversion is appended to the package name.
   - name: libllvm{{ major_ver }}
+    version: {{ version }} 
     script: install_llvm.sh  # [not win]
     build:
+      script_env:
+        - LLVM_VERSION={{ version }}
       activate_in_script: true
       run_exports:                                                    # [not win]
         - {{ pin_subpackage("libllvm" + major_ver, max_pin="x.x") }}  # [not win]
@@ -121,7 +121,10 @@ outputs:
   # This is a meta package so that people can use the latest libllvm and also
   # for run_exports
   - name: llvm
+    version: {{ version }}
     build:
+      script_env:
+        - LLVM_VERSION={{ version }}
       run_exports:                                                    # [not win]
         - {{ pin_subpackage("libllvm" + major_ver, max_pin="x.x") }}  # [not win]
     requirements:
@@ -141,9 +144,12 @@ outputs:
 
   # Contains LLVM tools
   - name: llvm-tools
+    version: {{ version }}
     script: install_llvm.sh   # [unix]
     script: install_llvm.bat  # [win]
     build:
+      script_env:
+        - LLVM_VERSION={{ version }}
       activate_in_script: true
     requirements:
       build:
@@ -173,6 +179,8 @@ outputs:
     script: install_llvm.sh   # [unix]
     script: install_llvm.bat  # [win]
     build:
+      script_env:
+        - LLVM_VERSION={{ version }}
       run_exports:
         - {{ pin_subpackage("libllvm-c" + major_ver, max_pin="x.x") }}
       activate_in_script: true
@@ -201,6 +209,7 @@ outputs:
         - if not exist %LIBRARY_LIB%\LLVM-C.lib exit 1          # [win]
 
   - name: lit
+    version: {{ version }}
     build:
       noarch: python
       script: python -m pip install llvm/utils/lit --no-deps -vv
