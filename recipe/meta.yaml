@@ -124,8 +124,6 @@ outputs:
   # for run_exports
   - name: llvm
     build:
-      script_env:
-        - LLVM_VERSION={{ version }}
       run_exports:                                                    # [not win]
         - {{ pin_subpackage("libllvm" + major_ver, max_pin="x.x") }}  # [not win]
     requirements:
@@ -151,8 +149,6 @@ outputs:
     script: install_llvm.sh   # [unix]
     script: install_llvm.bat  # [win]
     build:
-      script_env:
-        - LLVM_VERSION={{ version }}
       activate_in_script: true
     requirements:
       build:
@@ -185,8 +181,6 @@ outputs:
     script: install_llvm.sh   # [unix]
     script: install_llvm.bat  # [win]
     build:
-      script_env:
-        - LLVM_VERSION={{ version }}
       run_exports:
         - {{ pin_subpackage("libllvm-c" + major_ver, max_pin="x.x") }}
       activate_in_script: true
