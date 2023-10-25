@@ -6,7 +6,7 @@
 {% set extra = "git" if version.split(".")[-1] == "dev0" else extra %}
 
 package:
-  name: opencilk-compiler
+  name: opencilk-compiler-package
   version: {{ version }}
 
 source:
@@ -44,7 +44,7 @@ requirements:
 
 outputs:
   # Contains everything
-  - name: opencilk
+  - name: opencilk-compiler
     script: install_llvm.sh   # [unix]
     script: install_llvm.bat  # [win]
     build:
@@ -133,7 +133,7 @@ outputs:
       run:                                                            # [not win]
         - {{ pin_subpackage("libllvm" + major_ver, exact=True) }}     # [not win]
       run_constrained:                                                # [not win]
-        - opencilk   {{ version }}                                     # [not win]
+        - opencilk-compiler   {{ version }}                                     # [not win]
     test:
       commands:
         - echo "Hello World!"
@@ -162,7 +162,7 @@ outputs:
       run:
         - {{ pin_subpackage("libllvm" + major_ver, exact=True) }}
       run_constrained:
-        - opencilk   {{ version }}
+        - opencilk-compiler   {{ version }}
     test:
       commands:
         - $PREFIX/bin/llc -version                               # [not win]
@@ -196,7 +196,7 @@ outputs:
         - zlib
         - zstd
       run_constrained:
-        - opencilk {{ version }}
+        - opencilk-compiler {{ version }}
     test:
       commands:
         - test -f $PREFIX/lib/libLLVM-C.{{ major_ver }}.dylib   # [osx]
@@ -240,4 +240,4 @@ extra:
   recipe-maintainers:
     - jhilton
     - neboat
-  feedstock-name: opencilk
+  feedstock-name: opencilk-compiler
