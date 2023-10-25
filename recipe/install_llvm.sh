@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-IFS='.' read -ra VER_ARR <<< ${PKG_VERSION}
+IFS='.' read -ra VER_ARR <<< "$PKG_VERSION"
 
 # temporary prefix to be able to install files more granularly
 mkdir temp_prefix
