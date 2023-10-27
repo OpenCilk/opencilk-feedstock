@@ -5,7 +5,7 @@ yourself and install locally.
 
 To do this:
 1. Clone the repository.
-2. Run `conda mambabuild opencilk-feedstock`.
+2. Run `conda build opencilk-feedstock`.
 3. Run `conda install opencilk-compiler --use-local`.
 
 This feedstock currently only supports linux64.
